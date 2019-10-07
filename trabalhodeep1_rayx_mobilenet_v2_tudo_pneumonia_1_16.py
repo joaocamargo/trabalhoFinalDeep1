@@ -6,7 +6,7 @@ import torch.nn.functional as F
 from torch import nn
 from torchvision import datasets, transforms, models
 
-filename = "mobilenet_v2_10e_16_1.txt"
+filename = "mobilenet_v2_10e_1_16.txt"
 
 
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
@@ -36,16 +36,11 @@ def getitem(self, item):
   img = transform(image) 
   return img, label
 
-classes = (
-    'NORMAL','PNEUMONIA'
-    )
-	
-tamanhodobatch=100	
+classes = (    'NORMAL','PNEUMONIA'    )
 	
 print('Resize 256',file=open(filename, "a"))
 print('randomcrop 224',file=open(filename, "a"))
 print('batchsize - 100',file=open(filename, "a"))
-
 
 transform_train = transforms.Compose([transforms.Resize((256,256)),
                                       transforms.RandomCrop(224),
@@ -63,12 +58,12 @@ transform = transforms.Compose([transforms.Resize((256,256)),
 
 training_dataset = datasets.ImageFolder(root=PATHTrain,transform=transform_train)
 validation_dataset = datasets.ImageFolder(root=PATHVal,transform=transform)
-training_loader = torch.utils.data.DataLoader(dataset=training_dataset,batch_size=tamanhodobatch,shuffle=True)
-validation_loader = torch.utils.data.DataLoader(dataset=validation_dataset,batch_size=tamanhodobatch,shuffle=False)
+training_loader = torch.utils.data.DataLoader(dataset=training_dataset,batch_size=100,shuffle=True)
+validation_loader = torch.utils.data.DataLoader(dataset=validation_dataset,batch_size=100,shuffle=False)
 
 
 test_dataset = datasets.ImageFolder(root=PATHTest,transform=transform)
-test_loader = torch.utils.data.DataLoader(dataset=test_dataset,batch_size=tamanhodobatch,shuffle=True)
+test_loader = torch.utils.data.DataLoader(dataset=test_dataset,batch_size=100,shuffle=True)
 
 
 print(len(training_loader),file=open(filename, "a"))
@@ -96,8 +91,11 @@ print(model)
 import time
 start_time = time.time()
 
-print('weights = torch.tensor([16.0, 1.0]).to(device)',file=open(filename, "a"))
-weights = torch.tensor([16.0, 1.0]).to(device)
+
+print('weights = torch.tensor([1.0, 16.0]).to(device)',file=open(filename, "a"))
+
+weights = torch.tensor([1.0, 16.0]).to(device)
+
 criterion = nn.CrossEntropyLoss(weight=weights)
 optimizer = torch.optim.Adagrad(model.parameters(), lr = 0.001)
 print('optimizer = torch.optim.Adagrad(model.parameters(), lr = 0.001)',file=open(filename, "a"))
@@ -110,6 +108,7 @@ start_time = time.time()
 
 
 ##EPOCHS###########
+
 print('epochs =10',file=open(filename, "a"))
 
 epochs =10
