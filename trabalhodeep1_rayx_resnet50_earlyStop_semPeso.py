@@ -6,7 +6,7 @@ import torch.nn.functional as F
 from torch import nn
 from torchvision import datasets, transforms, models
 
-filename = "resnet50_10e_patience3_16_1.txt"
+filename = "resnet50_10e_patience3_sem_peso.txt"
 
 
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
@@ -147,9 +147,10 @@ import time
 start_time = time.time()
 
 
-print('weights = torch.tensor([16.0, 1.0]).to(device)',file=open(filename, "a"))
-weights = torch.tensor([16.0, 1.0]).to(device)
-criterion = nn.CrossEntropyLoss(weight=weights)
+print('sem peso',file=open(filename, "a"))
+#weights = torch.tensor([16.0, 1.0]).to(device)
+#criterion = nn.CrossEntropyLoss(weight=weights)
+criterion = nn.CrossEntropyLoss()
 
 print('optimizer = torch.optim.Adagrad(model.parameters(), lr = 0.001)',file=open(filename, "a"))
 optimizer = torch.optim.Adagrad(model.parameters(), lr = 0.001)

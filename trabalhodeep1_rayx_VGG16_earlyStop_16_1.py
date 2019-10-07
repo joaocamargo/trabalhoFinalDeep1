@@ -6,7 +6,7 @@ import torch.nn.functional as F
 from torch import nn
 from torchvision import datasets, transforms, models
 
-filename = "resnet50_10e_patience3_16_1.txt"
+filename = "VGG16_10e_patience3_16_1.txt"
 
 
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
@@ -136,9 +136,18 @@ images,labels = dataiter.next()
 
 #MODEL#MODEL#MODEL#MODEL#MODEL#MODEL#MODEL#MODEL
 
-model = models.resnet50(pretrained=True)
-model.fc = nn.Linear(2048, 2)  
+model = models.vgg16(pretrained=True)
+model
+
+for param in model.parameters():
+    param.requires_grad = False  #usado em neural style transfer
+	
+
+n_inputs = model.classifier[6].in_features
+last_layer = nn.Linear(n_inputs,len(classes))
+model.classifier[6] = last_layer
 model.to(device)
+print(model)
 
 
 ########EPOCHS###########
