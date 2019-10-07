@@ -7,7 +7,6 @@ Original file is located at
     https://colab.research.google.com/drive/1mdk1xByAVtWGUjPUh9W3rNNA-0JGTpiV
 """
 
-!pip install torch torchvision
 
 import torch
 import matplotlib.pyplot as plt 
@@ -20,10 +19,6 @@ device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 #device = "cpu"
 print(device)
 
-!ln -sf /opt/bin/nvidia-smi /usr/bin/nvidia-smi
-!pip install gputil
-!pip install psutil
-!pip install humanize
 import psutil
 import humanize
 import os
@@ -39,11 +34,11 @@ printm()
 
 """# Importar dataset"""
 
-from google.colab import drive
-drive.mount('/content/drive')
+#from google.colab import drive
+#drive.mount('/content/drive')
 
 #!ls '/content/drive/My Drive/Colab_Notebooks/Resources/trabalho_deep1'
-pathXRayImages =  '/chest_xray/'
+pathXRayImages =  './chest_xray'
 
 #!ls '/content/drive/My Drive/Colab_Notebooks/Resources/trabalho_deep1/train/NORMAL'
 
@@ -123,12 +118,12 @@ print(len(test_loader))
 dataiter = iter(training_loader)
 images,labels = dataiter.next()
 
-fig = plt.figure(figsize=(10,10))
+#fig = plt.figure(figsize=(10,10))
 
-for idx in np.arange(5):
-  ax = fig.add_subplot(5,5,idx+1,xticks=[],yticks=[])
-  plt.imshow(im_convert(images[idx]))
-  ax.set_title(classes[labels[idx].item()])
+#for idx in np.arange(5):
+  #ax = fig.add_subplot(5,5,idx+1,xticks=[],yticks=[])
+  #plt.imshow(im_convert(images[idx]))
+  #ax.set_title(classes[labels[idx].item()])
 
 model = models.mobilenet_v2(pretrained=True)
 model
@@ -241,13 +236,13 @@ print('levou {} segundos '.format(time.time() - start_time))
 #validation_loss: 0.7724, validation acc 73.7500
 #difference between loss: -0.0543566477298737
 
-plt.plot(running_loss_history,label='training loss')
-plt.plot(val_running_loss_history,label='validation loss')
-plt.legend()
+#plt.plot(running_loss_history,label='training loss')
+#plt.plot(val_running_loss_history,label='validation loss')
+#plt.legend()
 
-plt.plot(running_corrects_history,label='qnt de corretas  no treino',color="black")
-plt.plot(val_running_corrects_history,label='qnt de corretas na validacao', color='red')
-plt.legend()
+#plt.plot(running_corrects_history,label='qnt de corretas  no treino',color="black")
+#plt.plot(val_running_corrects_history,label='qnt de corretas na validacao', color='red')
+#plt.legend()
 
 dataiter = iter(test_loader)
 images,labels = dataiter.next()
@@ -257,19 +252,19 @@ model.eval()
 output = model(images)
 _,preds = torch.max(output,1)
 
-fig = plt.figure(figsize=(20,20))
+#fig = plt.figure(figsize=(20,20))
 
 acertos = 0
 erros = 0
 
 for idx in np.arange(len(images)):
-  ax = fig.add_subplot(20,5,idx+1,xticks=[],yticks=[])
-  plt.imshow(im_convert(images[idx]))  
+  #ax = fig.add_subplot(20,5,idx+1,xticks=[],yticks=[])
+  #plt.imshow(im_convert(images[idx]))  
   if preds[idx]==labels[idx]:
     acertos = acertos +1
   else:
     erros = erros +1
-  ax.set_title("{} ({})".format(str(classes[preds[idx].item()]),str(classes[labels[idx].item()])),color=('green' if preds[idx]==labels[idx] else "red"))
+  #ax.set_title("{} ({})".format(str(classes[preds[idx].item()]),str(classes[labels[idx].item()])),color=('green' if preds[idx]==labels[idx] else "red"))
   
 print('acertos: {} \nerros:{}'.format(acertos,erros))
 
@@ -290,11 +285,11 @@ print(confusion_matrix)
 
 print(confusion_matrix.diag()/confusion_matrix.sum(1))
 
-import seaborn as sn
-import matplotlib.pyplot as plt
+#import seaborn as sn
+#import matplotlib.pyplot as plt
 
-plt.figure(figsize = (10,7))
-sn.heatmap(confusion_matrix, annot=True,fmt='g')
+#plt.figure(figsize = (10,7))
+#sn.heatmap(confusion_matrix, annot=True,fmt='g')
 
 
 
