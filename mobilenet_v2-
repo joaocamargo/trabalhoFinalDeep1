@@ -1,0 +1,31 @@
+cuda:0
+53
+1
+7
+levou 0.0031404495239257812 segundos 
+epoch:  1
+train_loss: 0.0039,0.2766
+valid_loss: 0.0168, 
+valid_acc 0.5000
+epoch:  2
+train_loss: 0.0031,0.3735
+valid_loss: 0.0216, 
+valid_acc 0.5625
+epoch:  3
+train_loss: 0.0028,0.4852
+valid_loss: 0.0198, 
+valid_acc 0.5000
+epoch:  4
+train_loss: 0.0026,0.5518
+valid_loss: 0.0229, 
+valid_acc 0.5625
+epoch:  5
+train_loss: 0.0024,0.6108
+valid_loss: 0.0238, 
+valid_acc 0.5625
+levou 591.0117614269257 segundos 
+acertos: 67 
+erros:33
+tensor([[215.,  19.],
+        [167., 223.]])
+tensor([0.9188, 0.5718])
